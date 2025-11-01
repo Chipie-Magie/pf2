@@ -4,30 +4,29 @@
 const canvas = document.getElementById("universe");
 const ctx = canvas.getContext("2d");
 
-let w, h;
-function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
+let w = window.innerWidth;
+let h = window.innerHeight;
+canvas.width = w;
+canvas.height = h;
+
+let stars = [];
+const numStars = 100;
+
+function initStars() {
+    stars = Array.from({ length: numStars }, () => {
+        const z = Math.random() * w;
+        const radius = Math.random() * 1 + 0.5;
+        const vz = 0.1 + Math.random() * 0.3;
+
+        const px = Math.random() * w;
+        const py = Math.random() * h;
+
+        return { x: px, y: py, z, radius, vz, color: `rgba(${180 + Math.random() * 75},${180 + Math.random() * 75},255,0.9)` };
+    });
 }
-resize();
-window.addEventListener("resize", resize);
 
-// Génération des étoiles
-const numStars = 100; // tu peux augmenter pour plus dense
-const stars = Array.from({ length: numStars }, () => {
-    const z = Math.random() * w;
-    const radius = Math.random() * 1 + 0.5;
-    const vz = 0.1 + Math.random() * 0.3;
-
-    // Calcul d'une position aléatoire projetée sur l'écran
-    const k = 128 / z;
-    const px = Math.random() * w;
-    const py = Math.random() * h;
-    const x = (px - w / 2) / k + w / 2;
-    const y = (py - h / 2) / k + h / 2;
-
-    return { x, y, z, radius, vz, color: `rgba(${180 + Math.random() * 75},${180 + Math.random() * 75},255,0.9)` };
-});
+// Initialisation des étoiles
+initStars();
 
 // Mouvement de la souris pour perspective
 let mouseX = 0, mouseY = 0;
@@ -36,23 +35,41 @@ document.addEventListener("mousemove", (e) => {
     mouseY = (e.clientY - h / 2) / h;
 });
 
+// Fonction pour redimensionner le canvas correctement
+function resizeCanvas() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+
+    // On recalcule les étoiles pour qu'elles restent visibles
+    for (let star of stars) {
+        star.x = Math.random() * w;
+        star.y = Math.random() * h;
+        star.z = Math.random() * w;
+    }
+}
+
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("orientationchange", () => {
+    // On attend un petit délai pour que window.innerWidth/innerHeight se stabilisent
+    setTimeout(resizeCanvas, 200);
+});
+
 function animate() {
-    // Fond
     ctx.fillStyle = '#04177d';
     ctx.fillRect(0, 0, w, h);
 
     for (let star of stars) {
-        // Déplacement selon la profondeur
         star.z -= star.vz;
         if (star.z <= 0) {
-            star.z = w;                         // réinitialise en profondeur
-            star.x = Math.random() * w;         // nouvelle position aléatoire
+            star.z = w;
+            star.x = Math.random() * w;
             star.y = Math.random() * h;
             star.radius = Math.random() * 1.5 + 0.5;
             star.vz = 0.1 + Math.random() * 0.3;
         }
 
-        // Projection 3D
         const k = 128.0 / star.z;
         const px = (star.x - w / 2) * k + w / 2 + mouseX * 200;
         const py = (star.y - h / 2) * k + h / 2 + mouseY * 200;
@@ -70,6 +87,7 @@ function animate() {
 }
 
 animate();
+
 
 // =========================
 
@@ -217,10 +235,9 @@ btn.addEventListener("touchmove", moveBg, { passive: true });
 btn.addEventListener("touchstart", (e) => {
     const rect = e.target.getBoundingClientRect();
     const touch = e.touches[0];
-
-    // Mise à jour immédiate pour le premier touch
     e.target.style.setProperty("--x", ((touch.clientX - rect.x) / rect.width) * 100);
     e.target.style.setProperty("--y", ((touch.clientY - rect.y) / rect.height) * 100);
-
-    // Ne touche pas au reste, ton CSS gère le retour automatique
 }, { passive: true });
+
+
+
