@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sectionColors = {
         cr: "#fa13a1",       // section 1
-        infos: "#ffd166", // section 2
+        infos: "#ffe128", // section 2
         projets: "#00eade", // section 3
         contact: "#e75c28"     // section 4
     };
@@ -198,8 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Bouton Gooey
 
+
 // Sélection du bouton
 const btn = document.querySelector(".gooey-btn");
+
+// Initialisation des variables CSS pour amorcer l'animation
+btn.style.setProperty("--x", 50);
+btn.style.setProperty("--y", 50);
 
 // Fonction qui met à jour les variables CSS --x et --y
 function moveBg(e) {
@@ -221,23 +226,36 @@ function moveBg(e) {
     e.target.style.setProperty("--y", yPercent);
 }
 
-// Initialisation du bouton au centre (pour que l'effet soit prêt dès le départ)
-btn.style.setProperty("--x", 50);
-btn.style.setProperty("--y", 50);
-
 // Déplacement souris (desktop)
 btn.addEventListener("pointermove", moveBg);
 
 // Déplacement tactile (mobile)
 btn.addEventListener("touchmove", moveBg, { passive: true });
 
-// 🔹 Amorcer l'animation au premier touch pour mobile
-btn.addEventListener("touchstart", (e) => {
-    const rect = e.target.getBoundingClientRect();
-    const touch = e.touches[0];
-    e.target.style.setProperty("--x", ((touch.clientX - rect.x) / rect.width) * 100);
-    e.target.style.setProperty("--y", ((touch.clientY - rect.y) / rect.height) * 100);
-}, { passive: true });
+// 🔹 Amorcer l'animation au premier contact n'importe où sur l'écran (mobile)
+function initGooey(e) {
+    const rect = btn.getBoundingClientRect();
+    let clientX, clientY;
 
+    if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+    }
 
+    const xPercent = ((clientX - rect.x) / rect.width) * 100;
+    const yPercent = ((clientY - rect.y) / rect.height) * 100;
 
+    btn.style.setProperty("--x", xPercent);
+    btn.style.setProperty("--y", yPercent);
+
+    // On ne déclenche ça qu'une seule fois
+    document.removeEventListener("touchstart", initGooey);
+    document.removeEventListener("pointerdown", initGooey);
+}
+
+// Écoute le premier touch ou clic n'importe où pour amorcer l'animation
+document.addEventListener("touchstart", initGooey, { passive: true });
+document.addEventListener("pointerdown", initGooey);
