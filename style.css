@@ -30,6 +30,11 @@ a {
 
 h1 {
     margin-top: 0;
+    font-size: 2.3em;
+}
+
+h2 {
+    font-size: 1.3em;
 }
 
 
@@ -69,8 +74,17 @@ ul {
 li {
     width: 100%;
     text-align: center;
-
 }
+
+header nav a.active-link {
+    font-size: 2em;
+    /* 🌟 le lien actif est un peu plus grand */
+    font-weight: bold;
+    /* optionnel : le rendre plus visible */
+    padding: 0 0.5em;
+}
+
+
 
 /* MAIN */
 
@@ -82,11 +96,204 @@ main {
     /* pas de déplacement */
     height: 30em;
     /* hauteur fixe (ou ce que tu veux) */
-    overflow-y: auto;
+    /* overflow-y: auto; */
+    /* scroll horizontal */
+    overflow-x: auto;
     /* le contenu scroll à l’intérieur */
     margin: 2em 0;
     padding: 0 1.5em;
+
+    /* Ajout */
+    display: flex;
+    /* pas de scroll vertical sur main lui-même */
+    overflow-y: hidden;
+    /* snap horizontal */
+    scroll-snap-type: x mandatory;
+    /* hauteur fenêtre moins header (~2em top + padding) */
+    /* height: calc(100vh - 4em); */
+
+    /* supprime scrollbar Firefox */
+    scrollbar-width: none;
+
 }
+
+/* supprime scrollbar Chrome, Safari, Edge */
+main::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* Chaque section devient un slide horizontal */
+main section {
+    flex-shrink: 0;
+    /* empêche de rétrécir */
+    width: 100vw;
+    /* largeur de la fenêtre */
+    height: 100%;
+    /* pleine hauteur */
+    overflow-y: auto;
+    /* scroll vertical interne */
+    scroll-snap-align: start;
+    /* alignement snap */
+    padding: 2em;
+    box-sizing: border-box;
+}
+
+
+
+/* DOTS */
+.dots {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2.5em 2.5em;
+}
+
+/* ======== STYLE DE BASE D’UN DOT ======== */
+.dot {
+    all: unset;
+    /* supprime le style navigateur */
+    width: 1em;
+    /* Diamètre du cercle */
+    height: 1em;
+    /* Diamètre du cercle */
+    border-radius: 50%;
+    /* Rend le dot parfaitement rond */
+    border: 1px solid rgba(100, 150, 255, 0.4);
+    /* Bordure bleutée semi-transparente */
+    cursor: pointer;
+    /* Affiche la main au survol */
+    transition: all 0.3s ease;
+    /* Adoucit les changements de couleur/ombre au survol ou activation */
+}
+
+
+/* SECTION */
+
+/* CR */
+
+.cr h1 {
+    color: #fa13a1;
+}
+
+.cr h2 {
+    color: #00eade;
+}
+
+.cr p {
+    color: white;
+    font-size: 1.2em;
+}
+
+/* Bouton Gooey */
+
+.gooey-btn {
+    margin-top: 1rem;
+    align-self: center;
+    --a: 0%;
+    --hue: 170deg;
+    --x: 50;
+    --y: 50;
+    --button: hsl(var(--hue), 66%, 66%);
+    --size: 2em;
+
+    background: transparent;
+    color: hsla(var(--hue), 80%, 30%, 0.7);
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: relative;
+    padding: calc(var(--size)) calc(var(--size) * 1.5);
+    border: none;
+    cursor: pointer;
+    animation: color 20s linear infinite both;
+    transition: --a 0.5s ease-in-out,
+        scale var(--spring-duration) var(--spring-easing);
+    scale: 0.92;
+    isolation: isolate;
+    touch-action: none;
+    /* permet à pointer events de réagir sur mobile */
+}
+
+.gooey-btn:hover {
+    --a: 100%;
+    transition-duration: 0.5s, 1s;
+    opacity: 1;
+    scale: 1;
+}
+
+.gooey-btn:before {
+    content: "";
+    position: absolute;
+    inset: 0em;
+    filter: blur(12px) url(#goo) drop-shadow(0 0.25em 0.5em hsla(0deg, 0%, 0%, 0.8));
+    background-image: linear-gradient(0deg, var(--button), var(--button)),
+        radial-gradient(40% 70% at calc(var(--x) * 1%) calc(var(--y) * 1%),
+            hsla(var(--hue), 77%, 77%, var(--a)) 0%,
+            transparent 90%);
+    background-clip: content-box, border-box;
+    padding: 24px;
+    z-index: -1;
+    border: inherit;
+    animation: color 20s linear infinite both;
+}
+
+@keyframes color {
+    from {
+        --hue: 170deg;
+    }
+
+    to {
+        --hue: 530deg;
+    }
+}
+
+:root {
+    --spring-easing: linear(0,
+            0.002,
+            0.01 0.9%,
+            0.038 1.8%,
+            0.156,
+            0.312 5.8%,
+            0.789 11.1%,
+            1.015 14.2%,
+            1.096,
+            1.157,
+            1.199,
+            1.224 20.3%,
+            1.231,
+            1.231,
+            1.226,
+            1.214 24.6%,
+            1.176 26.9%,
+            1.057 32.6%,
+            1.007 35.5%,
+            0.984,
+            0.968,
+            0.956,
+            0.949 42%,
+            0.946 44.1%,
+            0.95 46.5%,
+            0.998 57.2%,
+            1.007,
+            1.011 63.3%,
+            1.012 68.3%,
+            0.998 84%,
+            1);
+    --spring-duration: 1.66s;
+}
+
+@property --a {
+    syntax: "<percentage>";
+    initial-value: 0%;
+    inherits: true;
+}
+
+@property --hue {
+    syntax: "<angle>";
+    initial-value: 170deg;
+    inherits: false;
+}
+
 
 /* FOOTER */
 

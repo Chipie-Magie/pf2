@@ -17,7 +17,7 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#cr">Cindy Rousseville</a></li>
+                <li><a href="#cr">Accueil</a></li>
                 <li><a href="#infos">Infos</a></li>
                 <li><a href="#projets">Projets</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -27,46 +27,58 @@
 
     <!-- MAIN -->
     <main>
-        <section id="cr">
-            <h1>Cindy Rousseville</h1>
-            <h3>Développeuse Web et Web mobile</h3>
-            <p>Bienvenue dans mon univers</p>
-            <h2>Cindy Rousseville</h2>
-            <h3>Développeuse Web et Web mobile</h3>
-            <p>Bienvenue dans mon univers</p>
-            <h2>Cindy Rousseville</h2>
-            <h3>Développeuse Web et Web mobile</h3>
-            <p>Bienvenue dans mon univers</p>
-            <h2>Cindy Rousseville</h2>
-            <h3>Développeuse Web et Web mobile</h3>
-            <p>Bienvenue dans mon univers</p>
-            <h2>Cindy Rousseville</h2>
-            <h3>Développeuse Web et Web mobile</h3>
-            <p>Bienvenue dans mon univers</p>
-            <h2>Cindy Rousseville</h2>
-            <h3>Développeuse Web et Web mobile</h3>
-            <p>Bienvenue dans mon univers</p>
+        <section class="cr" id="cr">
+            <h1>Cindy<br>Rousseville</h1>
+            <h2>Développeuse Web / Mobile</h2>
+            <p>Bienvenue dans mon univers numérique</p>
+            <button class="gooey-btn" type="button"
+                onclick="document.getElementById('infos').scrollIntoView({behavior: 'smooth'});">
+                EN SAVOIR PLUS
+            </button>
+            <svg width="0" height="0" style="position: absolute">
+                <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+                    <feComponentTransfer>
+                        <feFuncA type="discrete" tableValues="0 1"></feFuncA>
+                    </feComponentTransfer>
+                    <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+                    <feComponentTransfer>
+                        <feFuncA type="table" tableValues="-5 11"></feFuncA>
+                    </feComponentTransfer>
+                </filter>
+            </svg>
 
         </section>
 
         <section id="infos">
-            <h1>Infos</h1>
+            <h1>Mon univers : Présentation & technologies</h1>
             <h3>Voici les technologies que j'utilise</h3>
-            <p>HTML, CSS, JS</p>
+            <p>Salut ! Je suis Cindy, passionnée par le développement web/mobile et les nouvelles technologies. Je
+                transforme des idées
+                complexes en expériences digitales intuitives et interactives.
+            </p>
+            <p>Je maîtrise notamment :</p>
+            <p>JavaScript, React, Node.js, Python</p>
+            <p>je suis toujours curieuse d’explorer de nouvelles façons de créer des interfaces engageantes.</p>
+            <p>Mon objectif ? Que chaque projet ne soit pas seulement fonctionnel, mais aussi vivant et interactif, et
+                qu’il raconte
+                une histoire que les utilisateurs peuvent explorer.
+            </p>
 
         </section>
 
         <section id="projets">
-            <h1>Projets</h1>
-            <h3>Voici les projets que j'ai réalisés</h3>
+            <h1>Mes Projets</h1>
+            <h3>Voici quelques-uns de mes projets récents :</h3>
             <p>CoeurLinker, CrimePlaylist, CoquilletteStory</p>
 
         </section>
 
         <section id="contact">
             <h1>Contact</h1>
-            <h3>Vous avez un projet ? Contactez-moi</h3>
-            <p>Mail, Tel</p>
+            <h3>Vous avez un projet web ou mobile en tête ? N'hésitez pas à me contacter ! que ce soit pour collaborer,
+                poser une
+                question développer une idée, je serai ravie d'échanger avec vous.</h3>
+            <p>Mail : contact@cindyrousseville.fr</p>
 
         </section>
     </main>
@@ -81,6 +93,17 @@
 
     <footer>
         <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+        <p>© Cindy Rousseville 2025</p>
+
     </footer>
 
     <script src="script.js"></script>
