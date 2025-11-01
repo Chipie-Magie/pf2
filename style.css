@@ -212,6 +212,8 @@ main section {
     isolation: isolate;
     touch-action: none;
     /* permet à pointer events de réagir sur mobile */
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 .gooey-btn:hover {
@@ -235,6 +237,10 @@ main section {
     z-index: -1;
     border: inherit;
     animation: color 20s linear infinite both;
+}
+
+.gooey-btn:focus {
+    outline: none;
 }
 
 @keyframes color {

@@ -180,85 +180,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Bouton Gooey
 
-// JS robuste pour le bouton "gooey"
+// Sélection du bouton
 const btn = document.querySelector(".gooey-btn");
 
-// utilitaires pour lire coords selon le type d'événement
-function getClientXY(e) {
-    if (!e) return null;
-    if (e.clientX !== undefined && e.clientY !== undefined) return { x: e.clientX, y: e.clientY };
-    if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    return null;
-}
+// Fonction qui met à jour les variables CSS --x et --y
+function moveBg(e) {
+    const rect = e.target.getBoundingClientRect();
+    let clientX = e.clientX;
+    let clientY = e.clientY;
 
-// mise à jour immédiate des variables CSS (--x, --y)
-function setVars(xPercent, yPercent, withTransition = false) {
-    if (withTransition) {
-        // applique une transition uniquement pour le reset
-        btn.style.transition = "--x 0.55s cubic-bezier(.2,.9,.2,1), --y 0.55s cubic-bezier(.2,.9,.2,1)";
-    } else {
-        // pas de transition pendant le suivi -> rendre instantané
-        btn.style.transition = "none";
+    // Si c'est un événement tactile, on prend le premier point de contact
+    if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
     }
-    btn.style.setProperty("--x", xPercent);
-    btn.style.setProperty("--y", yPercent);
 
-    // si on a appliqué une transition pour le reset, l'enlever après la fin
-    if (withTransition) {
-        window.setTimeout(() => {
-            // retire la transition inline pour que les prochains pointermove soient fluides
-            btn.style.transition = "";
-        }, 600);
-    }
+    // Calcul des coordonnées relatives pour l'effet gooey
+    const xPercent = ((clientX - rect.x) / rect.width) * 100;
+    const yPercent = ((clientY - rect.y) / rect.height) * 100;
+
+    e.target.style.setProperty("--x", xPercent);
+    e.target.style.setProperty("--y", yPercent);
 }
 
-// calcul et application des coords (utilise getBoundingClientRect du bouton)
-function updateFromEvent(e, withTransition = false) {
-    const coords = getClientXY(e);
-    if (!coords) return;
-    const rect = btn.getBoundingClientRect();
-    const xPercent = ((coords.x - rect.left) / rect.width) * 100;
-    const yPercent = ((coords.y - rect.top) / rect.height) * 100;
-    setVars(xPercent, yPercent, withTransition);
-}
+// Initialisation du bouton au centre (pour que l'effet soit prêt dès le départ)
+btn.style.setProperty("--x", 50);
+btn.style.setProperty("--y", 50);
 
-// recentre au centre doucement
-function resetToCenter() {
-    setVars(50, 50, true);
-}
+// Déplacement souris (desktop)
+btn.addEventListener("pointermove", moveBg);
 
-// --- Initialisation : force des valeurs par défaut (important pour certains mobiles) ---
-setVars(50, 50, false);
+// Déplacement tactile (mobile)
+btn.addEventListener("touchmove", moveBg, { passive: true });
 
-// --- Écouteurs pointer (couvre mouse + touch + stylus) ---
-btn.addEventListener("pointerdown", (e) => {
-    // déclenche immédiatement même sans mouvement
-    updateFromEvent(e, false);
-    // capte les pointermove globaux pour suivre même si le doigt sort du bouton
-    btn.setPointerCapture(e.pointerId);
-});
+// 🔹 Amorcer l'animation au premier touch pour mobile
+btn.addEventListener("touchstart", (e) => {
+    const rect = e.target.getBoundingClientRect();
+    const touch = e.touches[0];
 
-btn.addEventListener("pointermove", (e) => {
-    updateFromEvent(e, false);
-});
+    // Mise à jour immédiate pour le premier touch
+    e.target.style.setProperty("--x", ((touch.clientX - rect.x) / rect.width) * 100);
+    e.target.style.setProperty("--y", ((touch.clientY - rect.y) / rect.height) * 100);
 
-btn.addEventListener("pointerup", (e) => {
-    try { btn.releasePointerCapture(e.pointerId); } catch (err) { }
-    resetToCenter();
-});
-
-btn.addEventListener("pointercancel", () => {
-    resetToCenter();
-});
-
-btn.addEventListener("pointerleave", (e) => {
-    // si mouse leave, recentre ; si touch leave, pointerup/pointercancel gèrera
-    if (e.pointerType === "mouse") resetToCenter();
-});
-
-// --- Fallbacks pour les navigateurs très anciens sans pointer events ---
-btn.addEventListener("touchstart", (e) => { updateFromEvent(e, false); }, { passive: true });
-btn.addEventListener("touchmove", (e) => { updateFromEvent(e, false); }, { passive: true });
-btn.addEventListener("touchend", () => { resetToCenter(); }, { passive: true });
-
-
+    // Ne touche pas au reste, ton CSS gère le retour automatique
+}, { passive: true });
