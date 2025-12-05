@@ -1,113 +1,145 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>C.R Portfolio</title>
-    <link rel='stylesheet' href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
-
+  <body>
     <!-- Le canvas du fond étoilé -->
     <canvas id="universe"></canvas>
 
+    <!-- Le canvas avion -->
+
+    <canvas id="planeCanvas"></canvas>
+
     <!-- HEADER -->
     <header>
-        <nav>
-            <ul>
-                <li><a href="#cr">Accueil</a></li>
-                <li><a href="#infos">Infos</a></li>
-                <li><a href="#projets">Projets</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+      <nav>
+        <ul>
+          <li><a href="#cr">Accueil</a></li>
+          <li><a href="#infos">Infos</a></li>
+          <li><a href="#projets">Projets</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
     </header>
 
     <!-- MAIN -->
     <main>
-        <section class="cr" id="cr">
-            <h1>Cindy<br>Rousseville</h1>
-            <h2>Développeuse Web / Mobile</h2>
-            <p>Bienvenue dans mon univers numérique</p>
-            <button class="gooey-btn" type="button"
-                onclick="document.getElementById('infos').scrollIntoView({behavior: 'smooth'});">
-                EN SAVOIR PLUS
-            </button>
-            <svg width="0" height="0" style="position: absolute">
-                <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
-                    <feComponentTransfer>
-                        <feFuncA type="discrete" tableValues="0 1"></feFuncA>
-                    </feComponentTransfer>
-                    <feGaussianBlur stdDeviation="5"></feGaussianBlur>
-                    <feComponentTransfer>
-                        <feFuncA type="table" tableValues="-5 11"></feFuncA>
-                    </feComponentTransfer>
-                </filter>
-            </svg>
+      <!-- Section CR -->
+      <section class="cr" id="cr">
+        <h1>Cindy<br />Rousseville</h1>
+        <h2>Développeuse Web / Mobile</h2>
+        <h3>Bienvenue dans mon univers numérique</h3>
 
-        </section>
+        <!-- BOUTON GOOEY -->
 
-        <section id="infos">
-            <h1>Mon univers : Présentation & technologies</h1>
-            <h3>Voici les technologies que j'utilise</h3>
-            <p>Salut ! Je suis Cindy, passionnée par le développement web/mobile et les nouvelles technologies. Je
-                transforme des idées
-                complexes en expériences digitales intuitives et interactives.
-            </p>
-            <p>Je maîtrise notamment :</p>
-            <p>JavaScript, React, Node.js, Python</p>
-            <p>je suis toujours curieuse d’explorer de nouvelles façons de créer des interfaces engageantes.</p>
-            <p>Mon objectif ? Que chaque projet ne soit pas seulement fonctionnel, mais aussi vivant et interactif, et
-                qu’il raconte
-                une histoire que les utilisateurs peuvent explorer.
-            </p>
+        <button
+          class="gooey-btn"
+          type="button"
+          onclick="document.getElementById('infos').scrollIntoView({behavior: 'smooth'});"
+        >
+          EN SAVOIR PLUS
+        </button>
+        <svg width="0" height="0" style="position: absolute">
+          <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+            <feComponentTransfer>
+              <feFuncA type="discrete" tableValues="0 1"></feFuncA>
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+            <feComponentTransfer>
+              <feFuncA type="table" tableValues="-5 11"></feFuncA>
+            </feComponentTransfer>
+          </filter>
+        </svg>
+      </section>
 
-        </section>
+      <!-- Section INFOS -->
+      <section id="infos">
+        <h1>Mon univers : Présentation & technologies</h1>
+        <h3>Voici les technologies que j'utilise</h3>
+        <p>
+          Salut ! Je suis Cindy, passionnée par le développement web/mobile et
+          les nouvelles technologies. Je transforme des idées complexes en
+          expériences digitales intuitives et interactives.
+        </p>
+        <p>Je maîtrise notamment :</p>
+        <p>JavaScript, React, Node.js, Python</p>
+        <p>
+          je suis toujours curieuse d’explorer de nouvelles façons de créer des
+          interfaces engageantes.
+        </p>
+        <p>
+          Mon objectif ? Que chaque projet ne soit pas seulement fonctionnel,
+          mais aussi vivant et interactif, et qu’il raconte une histoire que les
+          utilisateurs peuvent explorer.
+        </p>
+      </section>
 
-        <section id="projets">
-            <h1>Mes Projets</h1>
-            <h3>Voici quelques-uns de mes projets récents :</h3>
-            <p>CoeurLinker, CrimePlaylist, CoquilletteStory</p>
+      <!-- Section PROJETS -->
+      <section class="projets" id="projets">
+        <h1>Mes Projets</h1>
+        <h2>Voici quelques-uns de mes projets récents :</h2>
 
-        </section>
+        <div class="caroussel">
+          <div class="cards" style="--quantity: 4">
+            <div class="card" style="--position: 1">
+              <img src="img/capture-1.JPG" alt="" />
+            </div>
+            <div class="card" style="--position: 2">
+              <img src="img/capture-1.JPG" alt="" />
+            </div>
+            <div class="card" style="--position: 3">
+              <img src="img/capture-1.JPG" alt="" />
+            </div>
+            <div class="card" style="--position: 4">
+              <img src="img/capture-1.JPG" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <section id="contact">
-            <h1>Contact</h1>
-            <h3>Vous avez un projet web ou mobile en tête ? N'hésitez pas à me contacter ! que ce soit pour collaborer,
-                poser une
-                question développer une idée, je serai ravie d'échanger avec vous.</h3>
-            <p>Mail : contact@cindyrousseville.fr</p>
-
-        </section>
+      <section id="contact">
+        <h1>Contact</h1>
+        <h3>
+          Vous avez un projet web ou mobile en tête ? N'hésitez pas à me
+          contacter ! que ce soit pour collaborer, poser une question développer
+          une idée, je serai ravie d'échanger avec vous.
+        </h3>
+        <p>Mail : contact@cindyrousseville.fr</p>
+      </section>
     </main>
 
     <!-- NAV DOTS -->
     <nav class="dots" aria-hidden="false">
-        <button data-target="#cr" class="dot active" aria-label="Section 1"></button>
-        <button data-target="#infos" class="dot" aria-label="Section 2"></button>
-        <button data-target="#projets" class="dot" aria-label="Section 3"></button>
-        <button data-target="#contact" class="dot" aria-label="Section 4"></button>
+      <button
+        data-target="#cr"
+        class="dot active"
+        aria-label="Section 1"
+      ></button>
+      <button data-target="#infos" class="dot" aria-label="Section 2"></button>
+      <button
+        data-target="#projets"
+        class="dot"
+        aria-label="Section 3"
+      ></button>
+      <button
+        data-target="#contact"
+        class="dot"
+        aria-label="Section 4"
+      ></button>
     </nav>
 
     <footer>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-        <p>© Cindy Rousseville 2025</p>
-
+      <p>© Cindy Rousseville 2025</p>
     </footer>
 
-    <script src="script.js"></script>
-
-</body>
-
+    <script src="js/etoiles.js"></script>
+    <script src="js/gooey-button.js"></script>
+    <script src="js/sections.js"></script>
+    <script src="js/plane.js"></script>
+  </body>
 </html>
